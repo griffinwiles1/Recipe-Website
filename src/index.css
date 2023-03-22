@@ -1,0 +1,62 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primaryWhite: #c4c1bd;
+  --secondaryWhite: #f5f2eb;
+  --primaryDark: #20303b;
+  --secondaryDark: #4a5e67;
+  --primaryBlue: #1997d4;
+  --footerPrimary: #3e525b;
+  --footerSecondary: #93a4ad;
+}
+
+* {
+  scroll-behavior: smooth;
+}
+
+.bodyFlex {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.navbarShadow {
+  box-shadow: 0 2px 2px -2px #3e525b;
+}
+
+.heroAlert {
+  background:var(--footerPrimary);
+  font-family: Poppins;
+  font-weight: bold;
+  color: var(--secondaryWhite);
+  border-radius: 10px;
+}
+
+.darkFooterGradient {
+  /* ff 3.6+ */
+  background:-moz-linear-gradient(180deg, #20303B 0%, #3E525B 30%); 
+
+  /* safari 5.1+,chrome 10+ */
+  background:-webkit-linear-gradient(180deg, #20303B 0%, #3E525B 30%);
+
+  /* opera 11.10+ */
+  background:-o-linear-gradient(180deg, #20303B 0%, #3E525B 30%);
+
+  /* ie 6-9 */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3E525B', endColorstr='#20303B', GradientType=1 );
+
+  /* ie 10+ */
+  background:-ms-linear-gradient(180deg, #20303B 0%, #3E525B 30%);
+
+  /* global 94%+ browsers support */
+  background:linear-gradient(180deg, #20303B 0%, #3E525B 30%);
+}
+
+.list-item.TASK_ARCHIVED input[type="text"] {
+   color: #4a5568;
+   text-decoration: line-through;
+ }

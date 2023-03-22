@@ -1,0 +1,51 @@
+{
+  "name": "recipe-website",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "main": "dist/react-component-library.cjs.js",
+  "module": "dist/react-component-library.es.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "/dist",
+    "/dist/style.css"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "devDependencies": {
+    "@storybook/addon-essentials": "^7.0.0-rc.5",
+    "@storybook/addon-interactions": "^7.0.0-rc.5",
+    "@storybook/addon-links": "^7.0.0-rc.5",
+    "@storybook/blocks": "^7.0.0-rc.5",
+    "@storybook/react": "^7.0.0-rc.5",
+    "@storybook/react-vite": "^7.0.0-rc.5",
+    "@storybook/testing-library": "^0.0.14-next.1",
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "@vitejs/plugin-react": "^3.1.0",
+    "autoprefixer": "^10.4.14",
+    "msw": "^1.1.1",
+    "msw-storybook-addon": "^1.8.0",
+    "postcss": "^8.4.21",
+    "prop-types": "^15.8.1",
+    "storybook": "^7.0.0-rc.5",
+    "tailwindcss": "^3.2.7",
+    "vite": "^4.2.0"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.9.3",
+    "react-redux": "^8.0.5"
+  },
+  "msw": {
+    "workerDirectory": "public"
+  }
+}
