@@ -15,7 +15,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "chromatic": "npx chromatic --project-token=4720822ee363"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.0.0-rc.5",
@@ -48,5 +49,7 @@
   },
   "msw": {
     "workerDirectory": "public"
-  }
+  },
+  "readme": "ERROR: No README data found!",
+  "_id": "recipe-website@0.0.0"
 }
