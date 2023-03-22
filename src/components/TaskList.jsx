@@ -39,19 +39,19 @@ export default function TaskList() {
   );
   if (status === 'loading') {
     return (
-      <div className="list-items" data-testid="loading" key={"loading"}>
-        {LoadingRow}
-        {LoadingRow}
-        {LoadingRow}
-        {LoadingRow}
-        {LoadingRow}
-        {LoadingRow}
+      <div className="list-items" data-testid="loading" key={ "loading" }>
+        { LoadingRow }
+        { LoadingRow }
+        { LoadingRow }
+        { LoadingRow }
+        { LoadingRow }
+        { LoadingRow }
       </div>
     );
   }
   if (tasks.length === 0) {
     return (
-      <div className="list-items" key={"empty"} data-testid="empty">
+      <div className="list-items" key={ "empty" } data-testid="empty">
         <div className="wrapper-message">
           <span className="icon-check" />
           <p className="title-message">You have no tasks</p>
@@ -62,15 +62,15 @@ export default function TaskList() {
   }
 
   return (
-    <div className="list-items" data-testid="success" key={"success"}>
-      {tasks.map((task) => (
+    <div className="list-items" data-testid="success" key={ "success" }>
+      { tasks.map((task) => (
         <Task
-          key={task.id}
-          task={task}
-          onPinTask={(task) => pinTask(task)}
-          onArchiveTask={(task) => archiveTask(task)}
+          key={ task.id }
+          task={ task }
+          onPinTask={ (task) => pinTask(task) }
+          onArchiveTask={ (task) => archiveTask(task) }
         />
-      ))}
+      )) }
     </div>
   );
 }
