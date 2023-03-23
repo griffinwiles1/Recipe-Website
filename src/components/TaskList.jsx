@@ -27,21 +27,17 @@ export default function TaskList() {
     // We're dispatching the Completed event back to our store
     dispatch(updateTaskState({ id: value, newTaskState: 'TASK_COMPLETED' }));
   };
-  const uncompleteTask = (value) => {
-    // We're dispatching the Uncompleted event back to our store
-    dispatch(updateTaskState({ id: value, newTaskState: 'TASK_INBOX' }));
-  }
   const pinTask = (value) => {
     // We're dispatching the Pinned event back to our store
     dispatch(updateTaskState({ id: value, newTaskState: 'TASK_PINNED' }));
   };
-  const unpinTask = (value) => {
-    // We're dispatching the Pinned event back to our store
-    dispatch(updateTaskState({ id: value, newTaskState: 'TASK_INBOX' }));
-  };
   const archiveTask = (value) => {
     // We're dispatching the Archive event back to our store
     dispatch(updateTaskState({ id: value, newTaskState: 'TASK_ARCHIVED' }));
+  };
+  const restoreTask = (value) => {
+    // We're dispatching the Pinned event back to our store
+    dispatch(updateTaskState({ id: value, newTaskState: 'TASK_INBOX' }));
   };
   const deleteTask = (value) => {
     // We're dispatching the Delete event back to our store
@@ -82,17 +78,22 @@ export default function TaskList() {
   return (
     <div className="list-items" data-testid="success" key={"success"}>
       { tasks.map((task) => (
-        
-        <Task
-          key={ task.id }
-          task={ task }
-          onCompleteTask={ (task) => completeTask(task) }
-          onUncompleteTask={ (task) => uncompleteTask(task) }
-          onPinTask={ (task) => pinTask(task) }
-          onUnpinTask={ (task) => unpinTask(task) }
-          onArchiveTask={ (task) => archiveTask(task) }
-          onDeleteTask={ (task) => deleteTask(task) }
-        />
+        <div>
+          
+            <div>
+              <Task
+                key={ task.id }
+                task={ task }
+                onCompleteTask={ (task) => completeTask(task) }
+                onPinTask={ (task) => pinTask(task) }
+                onRestoreTask={ (task) => restoreTask(task) }
+                onArchiveTask={ (task) => archiveTask(task) }
+                onDeleteTask={ (task) => deleteTask(task) }
+              />
+            </div>
+          
+          
+        </div>
       )) }
     </div>
   );

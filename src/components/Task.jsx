@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { star, starHover, starSelected, starSelectedHover, archive, trash } from "../assets"
 import ImageToggle from "../lib/ImageToggle"
 
-export default function Task({ task: { id, title, state }, onCompleteTask, onUncompleteTask, onPinTask, onUnpinTask, onArchiveTask, onDeleteTask }) {
+export default function Task({ task: { id, title, state }, onCompleteTask, onPinTask, onArchiveTask, onRestoreTask, onDeleteTask }) {
   return (
     <div className={` flex flex-row justify-between list-item ${state} `}>
       <label
@@ -21,7 +21,7 @@ export default function Task({ task: { id, title, state }, onCompleteTask, onUnc
         />
         <span
           className="flex justify-center checkbox-custom cursor-pointer"
-          onClick={ () => state === "TASK_COMPLETED" ? onUncompleteTask(id) : onCompleteTask(id) }
+          onClick={ () => state === "TASK_COMPLETED" ? onRestoreTask(id) : onCompleteTask(id) }
         />
       </label>
       <label htmlFor="title" aria-label={ title } className="w-full flex justify-start title border-0">
@@ -32,7 +32,7 @@ export default function Task({ task: { id, title, state }, onCompleteTask, onUnc
           name="title"
           placeholder="Input title"
           className="w-max pl-2 text-primaryWhite overflow-ellipsis cursor-pointer"
-          onClick={ () => state === "TASK_COMPLETED" ? onUncompleteTask(id) : onCompleteTask(id) }
+          onClick={ () => state === "TASK_COMPLETED" ? onRestoreTask(id) : onCompleteTask(id) }
         />
       </label>
       
@@ -40,7 +40,7 @@ export default function Task({ task: { id, title, state }, onCompleteTask, onUnc
       <div className="flex justify-end">
         <button
           className="w-[16px] h-16px] flex justify-center items-center pin-button"
-          onClick={ () => onPinTask(id) }
+          onClick={ () => state === "TASK_PINNED" ? onRestoreTask(id) : onPinTask(id) }
           id={` pinTask-${ id } `}
           aria-label={` pinTask-${ id } `}
           key={` pinTask-${ id } `}
@@ -89,14 +89,12 @@ Task.propTypes = {
   }),
   /** Event to change the task to completed */
   onCompleteTask: PropTypes.func,
-  /** Event to change the task back to active */
-  onUncompleteTask: PropTypes.func,
   /** Event to change the task to archived */
   onArchiveTask: PropTypes.func,
   /** Event to change the task to pinned */
   onPinTask: PropTypes.func,
   /** Event to change the task to unpinned */
-  onUnpinTask: PropTypes.func,
+  onRestoreTask: PropTypes.func,
   /** Event to change the task to deleted */
   onDeleteTask: PropTypes.func,
 };
