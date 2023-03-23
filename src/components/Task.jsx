@@ -19,78 +19,39 @@ export default function Task({ task: { id, title, state }, onCompleteTask, onUnc
           id={` completeTask-${id} `}
           checked={ state === "TASK_COMPLETED" }
         />
-        { state !== "TASK_COMPLETED" && (
-          <span
-            className="flex justify-center checkbox-custom cursor-pointer"
-            onClick={ () => onCompleteTask(id) }
-          />
-        ) } 
-        { state === "TASK_COMPLETED" && (
-          <span
-            className="p-auto flex justify-center checkbox-custom cursor-pointer"
-            onClick={ () => onUncompleteTask(id) }
+        <span
+          className="flex justify-center checkbox-custom cursor-pointer"
+          onClick={ () => state === "TASK_COMPLETED" ? onUncompleteTask(id) : onCompleteTask(id) }
         />
-        )}
       </label>
       <label htmlFor="title" aria-label={ title } className="w-full flex justify-start title border-0">
-        { state !== "TASK_COMPLETED" && (
-          <input
-            type="text"
-            value={ title }
-            readOnly={ true }
-            name="title"
-            placeholder="Input title"
-            className="w-max pl-2 text-primaryWhite overflow-ellipsis cursor-pointer"
-            onClick={ () => onCompleteTask(id) }
-          />
-        ) }
-        { state === "TASK_COMPLETED" && (
-          <input
-            type="text"
-            value={ title }
-            readOnly={ true }
-            name="title"
-            placeholder="Input title"
-            className="w-max pl-2 text-primaryWhite overflow-ellipsis cursor-pointer"
-            onClick={ () => onUncompleteTask(id) }
-          />
-        ) }
+        <input
+          type="text"
+          value={ title }
+          readOnly={ true }
+          name="title"
+          placeholder="Input title"
+          className="w-max pl-2 text-primaryWhite overflow-ellipsis cursor-pointer"
+          onClick={ () => state === "TASK_COMPLETED" ? onUncompleteTask(id) : onCompleteTask(id) }
+        />
       </label>
       
     { state !== "TASK_COMPLETED" && (
       <div className="flex justify-end">
-        { state !== "TASK_PINNED" && (
-          <button
-            className="w-[16px] h-16px] flex justify-center items-center pin-button"
+        <button
+          className="w-[16px] h-16px] flex justify-center items-center pin-button"
           onClick={ () => onPinTask(id) }
           id={` pinTask-${ id } `}
           aria-label={` pinTask-${ id } `}
           key={` pinTask-${ id } `}
         >
-            <ImageToggle
-              primaryImg={ star }
-              secondaryImg={ starHover }
-              size="16px"
-              alt=""
-            />
+          <ImageToggle
+            primaryImg={ state === "TASK_PINNED" ? starSelected : star }
+            secondaryImg={ state === "TASK_PINNED" ? starSelectedHover : starHover }
+            size="16px"
+            alt=""
+          />
         </button>
-        )}
-        { state === "TASK_PINNED" && (
-          <button
-            className="flex justify-center items-center pin-button"
-          onClick={ () => onUnpinTask(id) }
-          id={` unpinTask-${ id } `}
-          aria-label={` unpinTask-${ id } `}
-          key={` unpinTask-${ id } `}
-        >
-            <ImageToggle
-              primaryImg={ starSelected }
-              secondaryImg={ starSelectedHover }
-              size="16px"
-              alt=""
-            />
-        </button>
-        )}
         <button
           className="w-[16px] h-16px] flex justify-center items-center pin-button"
           onClick={ () => onArchiveTask(id) }

@@ -8,7 +8,9 @@ import TaskInboxScreen from './components/TaskInboxScreen';
 function App() {
  return (
   <Provider store={store}>
-    <TaskInboxScreen />
+    <section className="bg-footerPrimary bodyFlex">
+      <TaskInboxScreen />
+    </section>
   </Provider>
  );
 }
