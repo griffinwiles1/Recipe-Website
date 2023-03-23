@@ -17,7 +17,7 @@ import { Provider } from 'react-redux';
 
 export default {
   component: InboxScreen,
-  title: 'InboxScreen',
+  title: 'Tasks/TaskInboxScreen',
   decorators: [(story) => <Provider store={ store }>{ story() }</Provider>],
 };
 

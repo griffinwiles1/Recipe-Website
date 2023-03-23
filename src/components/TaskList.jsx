@@ -9,10 +9,11 @@ export default function TaskList() {
   const tasks = useSelector((state) => {
     const tasksInOrder = [
       ...state.taskbox.tasks.filter((t) => t.state === 'TASK_PINNED'),
-      ...state.taskbox.tasks.filter((t) => t.state !== 'TASK_PINNED'),
+      ...state.taskbox.tasks.filter((t) => t.state !== 'TASK_PINNED' && t.state !== 'TASK_COMPLETED'),
+      ...state.taskbox.tasks.filter((t) => t.state === 'TASK_COMPLETED'),
     ];
     const filteredTasks = tasksInOrder.filter(
-      (t) => t.state === 'TASK_INBOX' || t.state === 'TASK_PINNED'
+      (t) => t.state === 'TASK_INBOX' || t.state === 'TASK_PINNED' || t.state === 'TASK_COMPLETED'
     );
     return filteredTasks;
   });
@@ -21,6 +22,14 @@ export default function TaskList() {
 
   const dispatch = useDispatch();
 
+  const completeTask = (value) => {
+    // We're dispatching the Completed event back to our store
+    dispatch(updateTaskState({ id: value, newTaskState: 'TASK_COMPLETED' }));
+  };
+  const uncompleteTask = (value) => {
+    // We're dispatching the Uncompleted event back to our store
+    dispatch(updateTaskState({ id: value, newTaskState: 'TASK_INBOX' }));
+  }
   const pinTask = (value) => {
     // We're dispatching the Pinned event back to our store
     dispatch(updateTaskState({ id: value, newTaskState: 'TASK_PINNED' }));
@@ -67,6 +76,8 @@ export default function TaskList() {
         <Task
           key={ task.id }
           task={ task }
+          onCompleteTask={ (task) => completeTask(task) }
+          onUncompleteTask={ (task) => uncompleteTask(task) }
           onPinTask={ (task) => pinTask(task) }
           onArchiveTask={ (task) => archiveTask(task) }
         />

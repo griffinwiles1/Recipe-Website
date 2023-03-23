@@ -56,37 +56,21 @@
   background:linear-gradient(180deg, #20303B 0%, #3E525B 30%);
 }
 
+
 .list-item.TASK_COMPLETED input[type="text"] {
-   color: #4a5568;
+   color: var(--secondaryDark);
    text-decoration: line-through;
  }
 
-
- .pin-button {
+.pin-button {
   width: 3rem;
   height: 3rem;
-  background: transparent;
   border: none;
   text-align: center;
-  transition: all 200ms ease-in;
-  color: #eee;
-  font-size: 16px;
-  line-height: 3rem;
   outline: none;
 }
 
-.pin-button:hover {
-  color: #2cc5d2;
-}
-.pin-button:focus {
-  outline-color: transparent;
-}
-
-.pin-button:active {
-  color: #555;
-}
-
- .checkbox {
+.checkbox {
   display: inline-block;
   height: 3rem;
   position: relative;
@@ -105,29 +89,26 @@
   right: auto;
   bottom: auto;
   left: 50%;
-  width: 0.85em;
-  height: 0.85em;
+  width: 1em;
+  height: 1em;
   transform: translate3d(-50%, -50%, 0);
   background: transparent;
-  box-shadow: #2cc5d2 0 0 0 1px inset;
+  box-shadow: var(--footerSecondary) 0 0 0 1px inset;
   content: "";
-  display: block;
+  display: flex;
 }
 
 .checkbox input[type="checkbox"]:checked + span:before {
-  font-size: 16px;
+  font-size: 14px;
   line-height: 24px;
   box-shadow: none;
-  color: #2cc5d2;
-  margin-top: -1px;
-  font-family: "percolate";
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
+  box-shadow: var(--footerSecondary) 0 0 0 1px inset;
   line-height: 1;
-
-  content: "\e65e";
+  color: var(--primaryWhite);
+  font-weight: semibold;
+  justify-content: center;
+  align-items: center;
+  content: "X";
 }
 
 .list-item {
