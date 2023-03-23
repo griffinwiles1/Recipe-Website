@@ -18,12 +18,12 @@ import { Provider } from 'react-redux';
 export default {
   component: InboxScreen,
   title: 'InboxScreen',
-  decorators: [(story) => <Provider store={store}>{story()}</Provider>],
+  decorators: [(story) => <Provider store={ store }>{ story() }</Provider>],
 };
 
 const Template = () => <InboxScreen />;
 
-export const Default = Template.bind({});
+export const Default = Template.bind({ });
 Default.parameters = {
   msw: {
     handlers: [

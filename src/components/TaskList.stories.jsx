@@ -49,19 +49,19 @@ const Mockstore = ({ taskboxState, children }) => (
 
 export default {
   component: TaskList,
-  title: 'Tasks/TaskList',
-  decorators: [(story) => <div style={{ padding: "3rem" }}>{story()}</div>],
+  title: 'TaskList',
+  decorators: [(story) => <div style={ { padding: "3rem" } }>{ story() }</div>],
   excludeStories: /.*MockedState$/,
 };
 
 const Template = () => <TaskList />;
 
-export const Default = Template.bind({});
+export const Default = Template.bind({ });
 Default.decorators = [
-  (story) => <Mockstore taskboxState={MockedState}>{story()}</Mockstore>,
+  (story) => <Mockstore taskboxState={ MockedState }>{ story() }</Mockstore>,
 ];
 
-export const WithPinnedTasks = Template.bind({});
+export const WithPinnedTasks = Template.bind({ });
 WithPinnedTasks.decorators = [
   (story) => {
     const pinnedtasks = [
@@ -71,41 +71,41 @@ WithPinnedTasks.decorators = [
 
     return (
       <Mockstore
-        taskboxState={{
+        taskboxState={ {
           ...MockedState,
           tasks: pinnedtasks,
-        }}
+        } }
       >
-        {story()}
+        { story() }
       </Mockstore>
     );
   },
 ];
 
-export const Loading = Template.bind({});
+export const Loading = Template.bind({ });
 Loading.decorators = [
   (story) => (
     <Mockstore
-      taskboxState={{
+      taskboxState={ {
         ...MockedState,
         status: 'loading',
-      }}
+      } }
     >
-      {story()}
+      { story() }
     </Mockstore>
   ),
 ];
 
-export const Empty = Template.bind({});
+export const Empty = Template.bind({ });
 Empty.decorators = [
   (story) => (
     <Mockstore
-      taskboxState={{
+      taskboxState={ {
         ...MockedState,
         tasks: [],
-      }}
+      } }
     >
-      {story()}
+      { story() }
     </Mockstore>
   ),
 ];
