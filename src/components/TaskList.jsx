@@ -6,18 +6,36 @@ import { updateTaskState } from '../lib/store';
 
 export default function TaskList() {
   // We're retrieving our state from the store
-  const tasks = useSelector((state) => {
-    const tasksInOrder = [
+  const tasksActive = useSelector((state) => {
+    const tasksActiveList = [
       ...state.taskbox.tasks.filter((t) => t.state === 'TASK_PINNED'),
       ...state.taskbox.tasks.filter((t) => t.state === 'TASK_INBOX'),
-      ...state.taskbox.tasks.filter((t) => t.state === 'TASK_COMPLETED'),
-      ...state.taskbox.tasks.filter((t) => t.state === 'TASK_ARCHIVED'),
-      ...state.taskbox.tasks.filter((t) => t.state === 'TASK_DELETED'),
     ];
-    return tasksInOrder;
+    return tasksActiveList;
   });
 
-  
+  const tasksCompleted = useSelector((state) => {
+    const tasksCompletedList = [
+      ...state.taskbox.tasks.filter((t) => t.state === 'TASK_COMPLETED'),
+    ];
+    return tasksCompletedList;
+  });
+
+  const tasksArchived = useSelector((state) => {
+    const tasksArchivedList = [
+      ...state.taskbox.tasks.filter((t) => t.state === 'TASK_ARCHIVED'),
+    ];
+    return tasksArchivedList;
+  });
+
+  const tasksDeleted = useSelector((state) => {
+    const tasksDeletedList = [
+      ...state.taskbox.tasks.filter((t) => t.state === 'TASK_DELETED'),
+    ];
+    return tasksDeletedList;
+  });
+
+
 
   const { status } = useSelector((state) => state.taskbox);
 
@@ -63,38 +81,91 @@ export default function TaskList() {
       </div>
     );
   }
-  if (tasks.length === 0) {
-    return (
-      <div className="list-items" key={"empty"} data-testid="empty">
-        <div className="wrapper-message">
-          <span className="icon-check" />
-          <p className="title-message">You have no tasks</p>
-          <p className="subtitle-message">Sit back and relax</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="list-items" data-testid="success" key={"success"}>
-      { tasks.map((task) => (
-        <div>
-          
+      <div>
+        <h1>Active Tasks</h1>
+        { (tasksActive.length === 0)
+          ? 
             <div>
-              <Task
-                key={ task.id }
-                task={ task }
-                onCompleteTask={ (task) => completeTask(task) }
-                onPinTask={ (task) => pinTask(task) }
-                onRestoreTask={ (task) => restoreTask(task) }
-                onArchiveTask={ (task) => archiveTask(task) }
-                onDeleteTask={ (task) => deleteTask(task) }
-              />
+              <p className="color-primaryDark">No Active Tasks, congrats!</p>
             </div>
-          
-          
-        </div>
-      )) }
+          : 
+            tasksActive.map((task) => (
+              <div>
+                <Task
+                  key={ task.id }
+                  task={ task }
+                  onCompleteTask={ (task) => completeTask(task) }
+                  onPinTask={ (task) => pinTask(task) }
+                  onRestoreTask={ (task) => restoreTask(task) }
+                  onArchiveTask={ (task) => archiveTask(task) }
+                  onDeleteTask={ (task) => deleteTask(task) }
+                />
+              </div>
+        )) }
+        { tasksCompleted.map((task) => (
+          <div>
+            <Task
+              key={ task.id }
+              task={ task }
+              onCompleteTask={ (task) => completeTask(task) }
+              onPinTask={ (task) => pinTask(task) }
+              onRestoreTask={ (task) => restoreTask(task) }
+              onArchiveTask={ (task) => archiveTask(task) }
+              onDeleteTask={ (task) => deleteTask(task) }
+            />
+          </div>
+        )) }
+      </div>
+      
+      <div>
+        <h1>Archived Tasks</h1>
+        { tasksArchived.length === 0 
+          ? 
+            <div>
+              <p className="color-primaryDark">No Archived Tasks</p>
+            </div>
+          :
+            tasksArchived.map((task) => (
+              <div>
+                <Task
+                  key={ task.id }
+                  task={ task }
+                  onCompleteTask={ (task) => completeTask(task) }
+                  onPinTask={ (task) => pinTask(task) }
+                  onRestoreTask={ (task) => restoreTask(task) }
+                  onArchiveTask={ (task) => archiveTask(task) }
+                  onDeleteTask={ (task) => deleteTask(task) }
+                />
+              </div>
+        )) }
+      </div>
+      
+      <div>
+        <h1>Trash Can</h1>
+        { tasksDeleted.length === 0 
+          ? 
+            <div>
+              <p className="color-primaryDark">Your Trash is Empty</p>
+            </div>
+          : 
+            tasksDeleted.map((task) => (
+              <div>
+                <Task
+                  key={ task.id }
+                  task={ task }
+                  onCompleteTask={ (task) => completeTask(task) }
+                  onPinTask={ (task) => pinTask(task) }
+                  onRestoreTask={ (task) => restoreTask(task) }
+                  onArchiveTask={ (task) => archiveTask(task) }
+                  onDeleteTask={ (task) => deleteTask(task) }
+                />
+              </div>
+        )) }
+      </div>
     </div>
+    
   );
 }
