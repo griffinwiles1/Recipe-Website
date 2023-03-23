@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { archive, pin, trash } from "../assets"
+import { star, starHover, starSelected, starSelectedHover, archive, trash } from "../assets"
+import ImageToggle from "../lib/ImageToggle"
 
-export default function Task({ task: { id, title, state }, onCompleteTask, onUncompleteTask, onPinTask, onArchiveTask, onDeleteTask }) {
+export default function Task({ task: { id, title, state }, onCompleteTask, onUncompleteTask, onPinTask, onUnpinTask, onArchiveTask, onDeleteTask }) {
   return (
     <div className={` flex flex-row justify-between list-item ${state} `}>
       <label
@@ -26,33 +27,70 @@ export default function Task({ task: { id, title, state }, onCompleteTask, onUnc
         ) } 
         { state === "TASK_COMPLETED" && (
           <span
-          className="flex justify-center checkbox-custom cursor-pointer"
-          onClick={ () => onUncompleteTask(id) }
+            className="p-auto flex justify-center checkbox-custom cursor-pointer"
+            onClick={ () => onUncompleteTask(id) }
         />
         )}
       </label>
-      <label htmlFor="title" aria-label={ title } className="w-full flex justify-start title">
-        <input
-          type="text"
-          value={ title }
-          readOnly={ true }
-          name="title"
-          placeholder="Input title"
-          className="w-max pl-2 text-primaryWhite overflow-ellipsis"
-        />
+      <label htmlFor="title" aria-label={ title } className="w-full flex justify-start title border-0">
+        { state !== "TASK_COMPLETED" && (
+          <input
+            type="text"
+            value={ title }
+            readOnly={ true }
+            name="title"
+            placeholder="Input title"
+            className="w-max pl-2 text-primaryWhite overflow-ellipsis cursor-pointer"
+            onClick={ () => onCompleteTask(id) }
+          />
+        ) }
+        { state === "TASK_COMPLETED" && (
+          <input
+            type="text"
+            value={ title }
+            readOnly={ true }
+            name="title"
+            placeholder="Input title"
+            className="w-max pl-2 text-primaryWhite overflow-ellipsis cursor-pointer"
+            onClick={ () => onUncompleteTask(id) }
+          />
+        ) }
       </label>
       
     { state !== "TASK_COMPLETED" && (
       <div className="flex justify-end">
-        <button
-          className="w-[16px] h-16px] flex justify-center items-center pin-button"
+        { state !== "TASK_PINNED" && (
+          <button
+            className="w-[16px] h-16px] flex justify-center items-center pin-button"
           onClick={ () => onPinTask(id) }
           id={` pinTask-${ id } `}
           aria-label={` pinTask-${ id } `}
           key={` pinTask-${ id } `}
         >
-          <img src={ pin } className="w-[16px] h-16px]" />
+            <ImageToggle
+              primaryImg={ star }
+              secondaryImg={ starHover }
+              size="16px"
+              alt=""
+            />
         </button>
+        )}
+        { state === "TASK_PINNED" && (
+          <button
+            className="flex justify-center items-center pin-button"
+          onClick={ () => onUnpinTask(id) }
+          id={` unpinTask-${ id } `}
+          aria-label={` unpinTask-${ id } `}
+          key={` unpinTask-${ id } `}
+        >
+            <ImageToggle
+              primaryImg={ starSelected }
+              secondaryImg={ starSelectedHover }
+              size="16px"
+              alt=""
+            />
+        </button>
+        )}
         <button
           className="w-[16px] h-16px] flex justify-center items-center pin-button"
           onClick={ () => onArchiveTask(id) }
@@ -96,6 +134,8 @@ Task.propTypes = {
   onArchiveTask: PropTypes.func,
   /** Event to change the task to pinned */
   onPinTask: PropTypes.func,
+  /** Event to change the task to unpinned */
+  onUnpinTask: PropTypes.func,
   /** Event to change the task to deleted */
   onDeleteTask: PropTypes.func,
 };

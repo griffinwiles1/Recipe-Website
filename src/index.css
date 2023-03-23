@@ -4,12 +4,31 @@
 @tailwind components;
 @tailwind utilities;
 
+/*----- CSS Tips -----
+  
+  --- Nested HTML --- 
+  If the className is somewhere inside the container:
+    .container:hover .className { background-color: yellow; }
+
+  If the className is directly inside the container:
+    .container:hover > .classname { background-color: yellow; }
+
+  If the className is next to (after containers closing tag) the container:
+    .container:hover + .className { background-color: yellow; }
+  
+  If the className is a sibling of the container:
+    .container:hover ~ .className { background-color: yellow; }
+
+
+*/
+
 :root {
   --primaryWhite: #c4c1bd;
   --secondaryWhite: #f5f2eb;
   --primaryDark: #20303b;
   --secondaryDark: #4a5e67;
   --primaryBlue: #1997d4;
+  --primaryRed: #A93113;
   --footerPrimary: #3e525b;
   --footerSecondary: #93a4ad;
 }
@@ -56,12 +75,6 @@
   background:linear-gradient(180deg, #20303B 0%, #3E525B 30%);
 }
 
-
-.list-item.TASK_COMPLETED input[type="text"] {
-   color: var(--secondaryDark);
-   text-decoration: line-through;
- }
-
 .pin-button {
   width: 3rem;
   height: 3rem;
@@ -93,22 +106,23 @@
   height: 1em;
   transform: translate3d(-50%, -50%, 0);
   background: transparent;
-  box-shadow: var(--footerSecondary) 0 0 0 1px inset;
+  box-shadow: var(--footerSecondary) 0 0 0 2px inset;
   content: "";
   display: flex;
 }
 
 .checkbox input[type="checkbox"]:checked + span:before {
+  padding-left: 1px;
+  padding-bottom: 1px;
   font-size: 14px;
   line-height: 24px;
-  box-shadow: none;
-  box-shadow: var(--footerSecondary) 0 0 0 1px inset;
-  line-height: 1;
-  color: var(--primaryWhite);
-  font-weight: semibold;
+  font-weight: bold;
+  color: var(--footerPrimary);
+  box-shadow: var(--footerPrimary) 0 0 0 2px inset;
+  content: "✓";
+  display: flex;
   justify-content: center;
   align-items: center;
-  content: "X";
 }
 
 .list-item {
@@ -136,4 +150,39 @@
 
 .list-item input[type="text"]:focus {
   cursor: text;
+}
+
+.list-item:hover {
+  background: var(--footerPrimary);
+}
+
+.list-item + .list-item {
+  border-top: 1px solid #f0f9fb;
+}
+
+.list-item.checked .delete-item {
+  display: inline-block;
+}
+
+.list-item.TASK_COMPLETED {
+  background: var(--footerSecondary);
+}
+
+.list-item.TASK_COMPLETED input[type="text"] {
+  color: var(--primaryDark);
+  line-height: 24px;
+  text-decoration: line-through;
+}
+
+.list-item.TASK_COMPLETED:hover, .list-item.TASK_PINNED:hover{
+  background: var(--primaryDark);
+}
+
+.list-item.TASK_COMPLETED:hover input[type="text"] {
+  color: var(--footerSecondary);
+  text-decoration: none;
+}
+
+.list-item.TASK_PINNED {
+  background: var(--footerPrimary);
 }

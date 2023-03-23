@@ -1,7 +1,7 @@
 
 import React from 'react';
 
-import InboxScreen from './InboxScreen';
+import InboxScreen from './TaskInboxScreen';
 
 import store from '../lib/store';
 import { rest } from 'msw';
