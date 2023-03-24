@@ -10,8 +10,12 @@ const styles = {
   marginY: "sm:my-16 my-6",
 
   border: "border-4 border-darkHeavy",
-  borderRounded: "border-2 border-white rounded",
+  borderRounded: "border-4 border-light rounded",
   borderRoundedL: "border-4 border-darkHeavy rounded-xl p4",
+
+  divContainer: "flex bg-lightMed rounded m1",
+  buttonDiv: "flex border-2 border-lightHeavy rounded-md bg-darkHeavy hover:bg-darkMed",
+  buttonDivLight: "flex border-2 border-darkHeavy rounded-md bg-lightHeavy hover:bg-dark"
 };
 
 export default styles;

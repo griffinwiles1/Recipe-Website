@@ -5,8 +5,38 @@ import { updateTaskState } from "../lib/store";
 
 import styles from "../style";
 
+/*----- TASK STATE ORGANIZATION ----- 
+  
+    --- Current Tasks ---
+      
+      - Active Tasks -
+      TASK_INBOX
+        -Options: Complete, Pin, Archive, Edit, Delete
+
+      TASK_PINNED (Move to the top of the list)
+        -Options: Complete, Restore (Replaces Pin), Archive, Edit, Delete
+  
+        
+      - Completed Tasks -
+      TASK_COMPLETED (Move to its own list within 'Current Tasks')
+        -Options: Restore (Replaces Complete) and Delete
+    
+    --- End Current Tasks ---
+
+    --- Archived Tasks ---
+    TASK_ARCHIVED (Move to its own list)
+      -Options: Complete, Restore, Edit, Delete
+
+
+    --- Deleted Tasks ---
+    TASK_DELETED (Move to its own list)
+      -Options: Restore, Delete (permanently)
+
+*/
+
 export default function TaskList() {
-  // We're retrieving our state from the store
+  
+  // Retrieve our states from the store
   const tasksActive = useSelector((state) => {
     const tasksActiveList = [
       ...state.taskbox.tasks.filter((t) => t.state === "TASK_PINNED"),
@@ -37,32 +67,27 @@ export default function TaskList() {
   });
 
 
-
   const { status } = useSelector((state) => state.taskbox);
 
   const dispatch = useDispatch();
 
+  // Dispatch the relevant events back to our store
   const completeTask = (value) => {
-    // We're dispatching the Completed event back to our store
     dispatch(updateTaskState({ id: value, newTaskState: "TASK_COMPLETED" }));
   };
   const pinTask = (value) => {
-    // We're dispatching the Pinned event back to our store
     dispatch(updateTaskState({ id: value, newTaskState: "TASK_PINNED" }));
   };
   const archiveTask = (value) => {
-    // We're dispatching the Archive event back to our store
     dispatch(updateTaskState({ id: value, newTaskState: "TASK_ARCHIVED" }));
   };
-  const editTaskTitle = (value) => {
-    dispatch(updateTaskState({ id: value, title: "Edited", newTaskState: "TASK_COMPLETED" }));
+  const editTaskTitle = (value, updatedTitle) => {
+    dispatch(updateTaskState({ id: value, title: updatedTitle, newTaskState: "TASK_COMPLETED" }));
   };
   const restoreTask = (value) => {
-    // We're dispatching the Pinned event back to our store
     dispatch(updateTaskState({ id: value, newTaskState: "TASK_INBOX" }));
   };
   const deleteTask = (value) => {
-    // We're dispatching the Delete event back to our store
     dispatch(updateTaskState({ id: value, newTaskState: "TASK_DELETED" }));
   }
   const LoadingRow = (
@@ -87,31 +112,57 @@ export default function TaskList() {
   }
 
   return (
-    <div className="list-items" data-testid="success" key={ "success" }>
-      <div className={` mx-4 p-4 flex flex-col ${ styles.borderRoundedL } bg-dark `}>
-        <h1 className="pb-4 text-light flex justify-center">Active Tasks</h1>
-        { (tasksActive.length === 0)
-          ? 
-            <div>
-              <p className="flex justify-center text-light">No Active Tasks, congrats!</p>
-            </div>
-          : 
-            <div className={` ${ styles.borderRounded }  `}>
-              <div>
+    <div className={` list-items `} data-testid="success" key={ "success" }>
+      
+      { /* - CURRENT TASKS DIV - */ }
+      <div className={` 
+        ${ styles.borderRoundedL }
+        mx-4 p-4 flex flex-col bg-dark 
+      `}>
+        <h1 className={` pb-4 text-light flex justify-center `}>Current Tasks</h1>
+        
+        { /* --- ACTIVE TASKS --- */ }
+        <div className={` p-2 rounded-md bg-light  `}>
+          { (tasksActive.length === 0)
+            ? 
+              <div> { /* - EMPTY - */ }
+                <p className="flex justify-center text-darkHeavy font-semibold">No Active Tasks, congrats!</p>
+              </div>
+            : 
+              <div className={` bg- `}>
                 { tasksActive.map((task) => (
-                  <Task
-                    key={ task.id }
-                    task={ task }
-                    onCompleteTask={ (task) => completeTask(task) }
-                    onPinTask={ (task) => pinTask(task) }
-                    onArchiveTask={ (task) => archiveTask(task) }
-                    onEditTaskTitle={ (task) => editTaskTitle(task) }
-                    onDeleteTask={ (task) => deleteTask(task) }
-                  />
+                  <div className={` 
+                    ${ task.state === "TASK_PINNED" ? "bg-darkHeavy" : "bg-lightHeavy" } 
+                    taskList
+                  `}>
+                    <Task
+                      key={ task.id }
+                      task={ task }
+                      onCompleteTask={ (task) => completeTask(task) }
+                      onPinTask={ (task) => pinTask(task) }
+                      onRestoreTask={ (task) => restoreTask(task) }
+                      onArchiveTask={ (task) => archiveTask(task) }
+                      onEditTaskTitle={ (task) => editTaskTitle(task) }
+                      onDeleteTask={ (task) => deleteTask(task) }
+                    />
+                  </div>
                 )) }
               </div>
-              
-              <div className={ tasksCompleted.length === 0 ? "border-t-0" : "border-t-2 border-t-light"}>
+          }
+        </div>
+
+        { /* --- COMPLETED TASKS --- */ }
+        <div className={` 
+          ${ styles.borderRounded } 
+          mt-4 bg-light  
+        `}>
+          { (tasksCompleted.length === 0)
+            ? 
+              <div> { /* - EMPTY - */ }
+                <p className={` flex justify-center text-dark font-semibold `}>Such Empty! Get busy with it!</p>
+              </div>
+            : 
+              <div > { /* - DATA - */ }
                 { tasksCompleted.map((task) => (
                   <Task
                     key={ task.id }
@@ -121,24 +172,31 @@ export default function TaskList() {
                   />
                 )) }
               </div>
-            </div>
-        }
+          }
         </div>
-      <div className={` mx-4 mt-8 p-4 flex flex-col ${ styles.borderRoundedL } bg-dark `}>
-        <h1 className="pb-4 text-light flex justify-center">Archived Tasks</h1>
+      
+      </div> { /* - END CURRENT TASKS DIV - */ }
+
+      
+      { /* --- ARCHIVED TASKS --- */ }
+      <div className={` 
+        ${ styles.borderRoundedL } 
+        mx-4 mt-8 p-4 flex flex-col bg-dark
+      `}>
+        <h1 className={` pb-4 text-light flex justify-center `}>Archived Tasks</h1>
         { tasksArchived.length === 0 
           ? 
-            <div>
-              <p className="flex justify-center text-light">No Archived Tasks</p>
+            <div> { /* - EMPTY - */ }
+              <p className={` flex justify-center text-light `}>No Archived Tasks</p>
             </div>
           :
-            <div className={ styles.borderRounded}>
+            <div className={` ${ styles.borderRounded } `}> { /* - DATA - */ }
               { tasksArchived.map((task) => (
                 <Task
                   key={ task.id }
                   task={ task }
                   onCompleteTask={ (task) => completeTask(task) }
-                  onEditTaskTitle={ (task) => editTaskTitle(task) }
+                  onEditTaskTitle={ (task) => editTaskTitle(task, "Test Title") }
                   onRestoreTask={ (task) => restoreTask(task) }
                   onDeleteTask={ (task) => deleteTask(task) }
                 />
@@ -147,15 +205,19 @@ export default function TaskList() {
         }
       </div>
       
-      <div className={` mx-4 mt-8 p-4 flex flex-col ${ styles.borderRoundedL } bg-dark `}>
-        <h1 className="pb-4  text-light flex justify-center">Trash Can</h1>
+      
+      { /* --- DELETED TASKS --- */ }
+      <div className={` ${ styles.borderRoundedL }
+        mx-4 mt-8 p-4 flex flex-col bg-dark 
+      `}>
+        <h1 className={` pb-4 text-light flex justify-center `}>Trash Can</h1>
         { tasksDeleted.length === 0 
           ? 
-            <div>
-              <p className={`flex justify-center text-light `}>Your Trash is Empty</p>
+            <div> { /* - EMPTY - */ }
+              <p className={` flex justify-center text-light `}>Your Trash is Empty</p>
             </div>
           : 
-            <div className={ styles.borderRounded }>
+            <div className={` ${ styles.borderRounded } `}> { /* - DATA - */ }
               { tasksDeleted.map((task) => (
                 <Task
                   key={ task.id }

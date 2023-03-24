@@ -31,29 +31,38 @@
   --darkMed: #28414d;
   --darkHeavy: #20303b;
   
+  --checkboxShadow: var(--lightMed) 0 0 0 2px inset;
+  --checkboxShadowDark: var(--darkHeavy) 0 0 0 2.5px inset;
+
 }
 
 * {
   scroll-behavior: smooth;
 }
 
+/* --- MISC --- */
 .bodyFlex {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-.pin-button {
+.taskButton {
   width: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 3rem;
-  border: none;
   text-align: center;
   outline: none;
 }
 
+
+/* --- checkbox --- */
 .checkbox {
+  width: 42px;
   display: inline-block;
-  height: 3rem;
+  height: 3.25rem;
   position: relative;
   vertical-align: middle;
 }
@@ -73,43 +82,40 @@
   height: 1em;
   transform: translate3d(-50%, -50%, 0);
   background: transparent;
-  box-shadow: var(--lightMed) 0 0 0 2px inset;
+  box-shadow: var(--checkboxShadow);
   content: "";
   display: flex;
 }
 
 .checkboxDark input[type="checkbox"] + span:before {
-  box-shadow: var(--darkHeavy) 0 0 0 2.5px inset;
+  box-shadow: var(--checkboxShadowDark);
 }
 
 .checkbox input[type="checkbox"]:checked + span:before {
   padding-left: 1px;
   padding-bottom: 1px;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 24px;
   font-weight: bold;
   color: var(--lightMed);
   box-shadow: var(--lightMed) 0 0 0 2px inset;
   content: "✓";
-  display: flex;
   justify-content: center;
   align-items: center;
 }
 
-
+/* --- list-item --- */
 .list-item {
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 16px;
+  line-height: 24px;
   display: flex;
   flex-wrap: wrap;
-  height: 3rem;
-  width: 100%;
-  background: var(--darkHeavy);
-  transition: all ease-out 150ms;
+  height: 3.25rem;
 }
 
 .list-item .title {
   overflow: hidden;
+  display: flex;
   text-overflow: ellipsis;
   white-space: nowrap;
   flex: 1;
@@ -117,65 +123,23 @@
 
 .list-item input[type="text"] {
   background: transparent;
-  width: 100%;
 }
 
 .list-item input[type="text"]:focus {
   cursor: text;
 }
 
-.list-item:hover {
-  background: var(--darkMed);
-}
-
-.list-item + .list-item {
-  border-top: 2px solid var(--lightMed);
-}
-
-.list-item.list-item.TASK_PINNED + .list-item {
-  border-top: 2px solid var(--darkHeavy);
-}
-
 .list-item.checked .delete-item {
   display: inline-block;
 }
 
-
-/* --- TASK_PINNED --- */
-.list-item.TASK_PINNED {
-  background: var(--lightMed);  
+/* --- taskList --- */
+.taskList:first-child {
+  border-top-right-radius: .375rem;
+  border-top-left-radius: .375rem;
 }
 
-.list-item.TASK_PINNED:hover {
-  background: var(--lightHeavy);
+.taskList:last-child {
+  border-bottom-right-radius: .375rem;
+  border-bottom-left-radius: .375rem;
 }
-
-.list-item.TASK_PINNED input[type="text"] {
-  color: var(--darkHeavy);
-  font-weight: bold;
-}
-
-
-/* --- TASK_COMPLETED/TASK_DELETED --- */
-.list-item.TASK_COMPLETED, .list-item.TASK_DELETED {
-  background: var(--darkMed);
-}
-
-.list-item.TASK_COMPLETED:hover, .list-item.TASK_DELETED:hover {
-  background: var(--dark);
-}
-
-.list-item.TASK_COMPLETED input[type="text"] {
-  color: var(--lightMed);
-  line-height: 24px;
-  text-decoration: line-through;
-}
-
-.list-item.TASK_COMPLETED:hover input[type="text"] {
-  text-decoration: none;
-}
-
-.list-item.TASK_DELETED input[type="text"] {
-  color: var(--lightMed);
-}
-
