@@ -4,6 +4,8 @@ import Task from './Task';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateTaskState } from '../lib/store';
 
+import styles from '../style';
+
 export default function TaskList() {
   // We're retrieving our state from the store
   const tasksActive = useSelector((state) => {
@@ -84,52 +86,55 @@ export default function TaskList() {
 
   return (
     <div className="list-items" data-testid="success" key={"success"}>
-      <div>
-        <h1>Active Tasks</h1>
+      <div className={` p-4 flex flex-col ${ styles.borderRoundedL } bg-footerPrimary `}>
+        <h1 className="pb-4 text-primaryWhite flex justify-center">Active Tasks</h1>
         { (tasksActive.length === 0)
           ? 
             <div>
-              <p className="color-primaryDark">No Active Tasks, congrats!</p>
+              <p className="flex justify-center text-primaryDark">No Active Tasks, congrats!</p>
             </div>
           : 
-            tasksActive.map((task) => (
+            <div className={` ${ styles.borderRounded }  `}>
               <div>
-                <Task
-                  key={ task.id }
-                  task={ task }
-                  onCompleteTask={ (task) => completeTask(task) }
-                  onPinTask={ (task) => pinTask(task) }
-                  onRestoreTask={ (task) => restoreTask(task) }
-                  onArchiveTask={ (task) => archiveTask(task) }
-                  onDeleteTask={ (task) => deleteTask(task) }
-                />
+                { tasksActive.map((task) => (
+                  <Task
+                    key={ task.id }
+                    task={ task }
+                    onCompleteTask={ (task) => completeTask(task) }
+                    onPinTask={ (task) => pinTask(task) }
+                    onRestoreTask={ (task) => restoreTask(task) }
+                    onArchiveTask={ (task) => archiveTask(task) }
+                    onDeleteTask={ (task) => deleteTask(task) }
+                  />
+                )) }
               </div>
-        )) }
-        { tasksCompleted.map((task) => (
-          <div>
-            <Task
-              key={ task.id }
-              task={ task }
-              onCompleteTask={ (task) => completeTask(task) }
-              onPinTask={ (task) => pinTask(task) }
-              onRestoreTask={ (task) => restoreTask(task) }
-              onArchiveTask={ (task) => archiveTask(task) }
-              onDeleteTask={ (task) => deleteTask(task) }
-            />
-          </div>
-        )) }
-      </div>
-      
-      <div>
-        <h1>Archived Tasks</h1>
+              
+              <div>
+                { tasksCompleted.map((task) => (
+                  <Task
+                    key={ task.id }
+                    task={ task }
+                    onCompleteTask={ (task) => completeTask(task) }
+                    onPinTask={ (task) => pinTask(task) }
+                    onRestoreTask={ (task) => restoreTask(task) }
+                    onArchiveTask={ (task) => archiveTask(task) }
+                    onDeleteTask={ (task) => deleteTask(task) }
+                  />
+                )) }
+              </div>
+            </div>
+        }
+        </div>
+      <div className={` mt-8 p-4 flex flex-col ${ styles.borderRoundedL } bg-footerPrimary `}>
+        <h1 className="pb-4 text-primaryWhite flex justify-center">Archived Tasks</h1>
         { tasksArchived.length === 0 
           ? 
             <div>
-              <p className="color-primaryDark">No Archived Tasks</p>
+              <p className="flex justify-center text-primaryWhite">No Archived Tasks</p>
             </div>
           :
-            tasksArchived.map((task) => (
-              <div>
+            <div className={ styles.borderRounded}>
+              { tasksArchived.map((task) => (
                 <Task
                   key={ task.id }
                   task={ task }
@@ -139,16 +144,17 @@ export default function TaskList() {
                   onArchiveTask={ (task) => archiveTask(task) }
                   onDeleteTask={ (task) => deleteTask(task) }
                 />
-              </div>
-        )) }
+            )) }
+          </div>
+        }
       </div>
       
-      <div>
-        <h1>Trash Can</h1>
+      <div className={` mt-8 p-4 flex flex-col ${ styles.borderRoundedL } bg-footerPrimary `}>
+        <h1 className="pb-4  text-primaryWhite flex justify-center">Trash Can</h1>
         { tasksDeleted.length === 0 
           ? 
             <div>
-              <p className="color-primaryDark">Your Trash is Empty</p>
+              <p className="flex justify-center text-primaryWhite">Your Trash is Empty</p>
             </div>
           : 
             tasksDeleted.map((task) => (
@@ -163,9 +169,9 @@ export default function TaskList() {
                   onDeleteTask={ (task) => deleteTask(task) }
                 />
               </div>
-        )) }
+            )) 
+        }
       </div>
     </div>
-    
   );
 }

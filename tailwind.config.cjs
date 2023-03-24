@@ -8,7 +8,7 @@ module.exports = {
         primaryWhite: "#c4c1bd",
         secondaryWhite: "#f5f2eb",
         primaryDark: "#20303b",
-        secondaryDark: "#4a5e67",
+        secondaryDark: "#415a68",
         primaryBlue: "#1997d4",
         footerPrimary: "#3e525b",
         footerSecondary: "#93a4ad",

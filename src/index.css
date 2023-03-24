@@ -26,11 +26,11 @@
   --primaryWhite: #c4c1bd;
   --secondaryWhite: #f5f2eb;
   --primaryDark: #20303b;
-  --secondaryDark: #4a5e67;
+  --secondaryDark: #415a68;
   --primaryBlue: #1997d4;
-  --primaryRed: #A93113;
+  --primaryRed: #692210;
   --footerPrimary: #3e525b;
-  --footerSecondary: #93a4ad;
+  --footerSecondary: #697c86;
 }
 
 * {
@@ -164,7 +164,10 @@
   display: inline-block;
 }
 
-.list-item.TASK_COMPLETED {
+.list-item.TASK_PINNED {
+  background: var(--secondaryDark); 
+}
+.list-item.TASK_COMPLETED, .list-item.TASK_DELETED {
   background: var(--footerSecondary);
 }
 
@@ -174,7 +177,11 @@
   text-decoration: line-through;
 }
 
-.list-item.TASK_COMPLETED:hover, .list-item.TASK_PINNED:hover{
+.list-item.TASK_PINNED:hover {
+  background: var(--footerPrimary);
+}
+
+.list-item.TASK_COMPLETED:hover {
   background: var(--primaryDark);
 }
 
@@ -183,6 +190,6 @@
   text-decoration: none;
 }
 
-.list-item.TASK_PINNED {
-  background: var(--footerPrimary);
+.list-item.TASK_DELETED input[type="text"] {
+  color: var(--primaryDark);
 }

@@ -1,12 +1,13 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from "react"
+import PropTypes from "prop-types"
 
-import { star, starHover, starSelected, starSelectedHover, archive, trash } from "../assets"
+import { archive,  restore, restoreDark, star, starSelected, trash, trashDark } from "../assets"
+import styles from "../style"
 import ImageToggle from "../lib/ImageToggle"
 
 export default function Task({ task: { id, title, state }, onCompleteTask, onPinTask, onArchiveTask, onRestoreTask, onDeleteTask }) {
   return (
-    <div className={` flex flex-row justify-between list-item ${state} `}>
+    <div className={` ${ styles.flexBetween } ${ styles.flexpadding } list-item ${ state } rounded-s `}>
       <label
         htmlFor="checked"
         aria-label={` completeTask-${id} `}
@@ -20,8 +21,12 @@ export default function Task({ task: { id, title, state }, onCompleteTask, onPin
           checked={ state === "TASK_COMPLETED" }
         />
         <span
-          className="flex justify-center checkbox-custom cursor-pointer"
-          onClick={ () => state === "TASK_COMPLETED" ? onRestoreTask(id) : onCompleteTask(id) }
+          className={` flex justify-center checkbox-custom ${ state === "TASK_DELETED" ? "cursor-auto" : "cursor-pointer" } `}
+          onClick={ 
+            () => state === "TASK_COMPLETED" ? onRestoreTask(id) 
+            : state === "TASK_DELETED" ? null
+            : onCompleteTask(id) 
+          }
         />
       </label>
       <label htmlFor="title" aria-label={ title } className="w-full flex justify-start title border-0">
@@ -31,12 +36,16 @@ export default function Task({ task: { id, title, state }, onCompleteTask, onPin
           readOnly={ true }
           name="title"
           placeholder="Input title"
-          className="w-max pl-2 text-primaryWhite overflow-ellipsis cursor-pointer"
-          onClick={ () => state === "TASK_COMPLETED" ? onRestoreTask(id) : onCompleteTask(id) }
+          className={` w-max border-0 text-primaryWhite overflow-ellipsis ${ state === "TASK_DELETED" ? "cursor-auto" : "cursor-pointer" } `}
+          onClick={ 
+            () => state === "TASK_COMPLETED" ? onRestoreTask(id) 
+            : state === "TASK_DELETED" ? null
+            : onCompleteTask(id) 
+          }
         />
       </label>
       
-    { state !== "TASK_COMPLETED" && (
+    { (state !== "TASK_COMPLETED" && state !== "TASK_ARCHIVED" && state !== "TASK_DELETED" ) && (
       <div className="flex justify-end">
         <button
           className="w-[16px] h-16px] flex justify-center items-center pin-button"
@@ -47,7 +56,7 @@ export default function Task({ task: { id, title, state }, onCompleteTask, onPin
         >
           <ImageToggle
             primaryImg={ state === "TASK_PINNED" ? starSelected : star }
-            secondaryImg={ state === "TASK_PINNED" ? starSelectedHover : starHover }
+            secondaryImg={ state === "TASK_PINNED" ? star : starSelected }
             size="16px"
             alt=""
           />
@@ -63,7 +72,18 @@ export default function Task({ task: { id, title, state }, onCompleteTask, onPin
         </button>
       </div>
     ) }
-      
+    { (state === "TASK_ARCHIVED" || state === "TASK_DELETED") && (
+      <button
+        className="w-[16px] h-16px] flex justify-center items-center pin-button"
+        onClick={ () => onRestoreTask(id) }
+        id={` restoreDeletedTask-${ id } `}
+        aria-label={` restoreDeletedTask-${ id } `}
+        key={` restoreDeletedTask-${ id } `}
+    >
+      <img src={ state === "TASK_DELETED" ? restoreDark : restore } className="w-[16px] h-[16px]" />
+    </button>
+    ) }  
+
     <button
       className="w-[16px] h-16px] flex justify-center items-center pin-button"
       onClick={ () => onDeleteTask(id) }
@@ -71,7 +91,7 @@ export default function Task({ task: { id, title, state }, onCompleteTask, onPin
       aria-label={` deleteTask-${ id } `}
       key={` deleteTask-${ id } `}
     >
-      <img src={ trash } className="w-[16px] h-16px]" />
+      <img src={ (state === "TASK_COMPLETED" || state === "TASK_DELETED") ? trashDark : trash } className="w-[16px] h-[16px]" />
     </button>
   </div>
   );
