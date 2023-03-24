@@ -14,8 +14,8 @@ const styles = {
   marginX: "sm:mx-16 mx-6",
   marginY: "sm:my-16 my-6",
 
-  border: "border-4 border-primaryDark p4",
-  borderRounded: "border-2 border-primaryWhite rounded p4",
+  border: "border-4 border-primaryDark",
+  borderRounded: "border-2 border-primaryWhite rounded",
   borderRoundedL: "border-4 border-primaryDark rounded-xl p4",
 };
 

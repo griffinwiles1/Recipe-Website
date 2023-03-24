@@ -5,6 +5,7 @@ import editDark from "./editDark.png"
 import restore from "./restore.png"
 import restoreDark from "./restoreDark.png"
 import star from "./star.png"
+import starHover from "./starHover.png"
 import starSelected from "./starSelected.png"
 import trash from "./delete.png"
 import trashDark from "./deleteDark.png"
@@ -17,6 +18,7 @@ export {
     restore,
     restoreDark,
     star,
+    starHover,
     starSelected,
     trash,
     trashDark,

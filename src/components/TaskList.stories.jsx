@@ -61,14 +61,18 @@ Default.decorators = [
   (story) => <Mockstore taskboxState={ MockedState }>{ story() }</Mockstore>,
 ];
 
-export const WithPinnedTasks = Template.bind({ });
-WithPinnedTasks.decorators = [
+export const TheEverythingSpecial = Template.bind({ });
+TheEverythingSpecial.decorators = [
   (story) => {
     const pinnedtasks = [
       ...MockedState.tasks.slice(0, 5),
-      { id: '6', title: 'Task 6 (pinned)', state: 'TASK_PINNED' },
+      { id: "6", title: "Task 6 (Pinned)", state: "TASK_PINNED" },
+      { id: "7", title: "Task 7 (Archived)", state: "TASK_ARCHIVED"},
+      { id: "8", title: "Task 8 (Deleted)", state: "TASK_DELETED"},
+      { id: "9", title: "Task 9 (Completed)", state: "TASK_COMPLETED"},
+      { id: "10", title: "Task 10 (Pinned)", state: "TASK_PINNED" },
     ];
-
+    
     return (
       <Mockstore
         taskboxState={ {

@@ -86,12 +86,12 @@ export default function TaskList() {
 
   return (
     <div className="list-items" data-testid="success" key={"success"}>
-      <div className={` p-4 flex flex-col ${ styles.borderRoundedL } bg-footerPrimary `}>
+      <div className={` mx-4 p-4 flex flex-col ${ styles.borderRoundedL } bg-footerPrimary `}>
         <h1 className="pb-4 text-primaryWhite flex justify-center">Active Tasks</h1>
         { (tasksActive.length === 0)
           ? 
             <div>
-              <p className="flex justify-center text-primaryDark">No Active Tasks, congrats!</p>
+              <p className="flex justify-center text-primaryWhite">No Active Tasks, congrats!</p>
             </div>
           : 
             <div className={` ${ styles.borderRounded }  `}>
@@ -109,7 +109,7 @@ export default function TaskList() {
                 )) }
               </div>
               
-              <div>
+              <div className="border-t border-t-primaryWhite">
                 { tasksCompleted.map((task) => (
                   <Task
                     key={ task.id }
@@ -125,7 +125,7 @@ export default function TaskList() {
             </div>
         }
         </div>
-      <div className={` mt-8 p-4 flex flex-col ${ styles.borderRoundedL } bg-footerPrimary `}>
+      <div className={` mx-4 mt-8 p-4 flex flex-col ${ styles.borderRoundedL } bg-footerPrimary `}>
         <h1 className="pb-4 text-primaryWhite flex justify-center">Archived Tasks</h1>
         { tasksArchived.length === 0 
           ? 
@@ -149,16 +149,16 @@ export default function TaskList() {
         }
       </div>
       
-      <div className={` mt-8 p-4 flex flex-col ${ styles.borderRoundedL } bg-footerPrimary `}>
+      <div className={` mx-4 mt-8 p-4 flex flex-col ${ styles.borderRoundedL } bg-footerPrimary `}>
         <h1 className="pb-4  text-primaryWhite flex justify-center">Trash Can</h1>
         { tasksDeleted.length === 0 
           ? 
             <div>
-              <p className="flex justify-center text-primaryWhite">Your Trash is Empty</p>
+              <p className={`flex justify-center text-primaryWhite `}>Your Trash is Empty</p>
             </div>
           : 
-            tasksDeleted.map((task) => (
-              <div>
+            <div className={ styles.borderRounded }>
+              { tasksDeleted.map((task) => (
                 <Task
                   key={ task.id }
                   task={ task }
@@ -168,8 +168,8 @@ export default function TaskList() {
                   onArchiveTask={ (task) => archiveTask(task) }
                   onDeleteTask={ (task) => deleteTask(task) }
                 />
-              </div>
-            )) 
+              )) }
+            </div> 
         }
       </div>
     </div>
