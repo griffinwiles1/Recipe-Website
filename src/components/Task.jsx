@@ -1,11 +1,11 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-import { archive, archiveDark, edit, editDark, restore, restoreDark, star, starHover, starSelected, trash, trashDark } from "../assets"
+import { archive, archiveDark, edit, editDark, restore, star, starHover, starSelected, trash, trashDark } from "../assets"
 import styles from "../style"
 import ImageToggle from "../lib/ImageToggle"
 
-export default function Task({ task: { id, title, state }, onCompleteTask, onPinTask, onArchiveTask, onRestoreTask, onDeleteTask }) {
+export default function Task({ task: { id, title, state }, onCompleteTask, onPinTask, onArchiveTask, onEditTaskTitle, onRestoreTask, onDeleteTask }) {
   return (
     <div className={` ${ styles.flexBetween } ${ styles.flexpadding } list-item ${ state } rounded-s `}>
       <label
@@ -36,7 +36,7 @@ export default function Task({ task: { id, title, state }, onCompleteTask, onPin
           readOnly={ true }
           name="title"
           placeholder="Input title"
-          className={` w-max border-0 text-primaryWhite overflow-ellipsis cursor-pointer `}
+          className={` w-max border-0 shadow-none text-light overflow-ellipsis cursor-pointer `}
           onClick={ 
             () => state === "TASK_COMPLETED" ? onRestoreTask(id) 
             : state === "TASK_DELETED" ? onSelectDeletedTask(id)
@@ -88,7 +88,7 @@ export default function Task({ task: { id, title, state }, onCompleteTask, onPin
       { (state === "TASK_INBOX" || state ==="TASK_PINNED" || state === "TASK_ARCHIVED") && (
         <button
           className="w-[16px] h-16px] flex justify-center items-center pin-button"
-          onClick={ () => onEditTask(id) }
+          onClick={ () => onEditTaskTitle(id) }
           id={` editTask-${ id } `}
           aria-label={` editTask-${ id } `}
           key={` editTask-${ id } `}
@@ -122,10 +122,12 @@ Task.propTypes = {
   }),
   /** Event to change the task to completed */
   onCompleteTask: PropTypes.func,
-  /** Event to change the task to archived */
-  onArchiveTask: PropTypes.func,
   /** Event to change the task to pinned */
   onPinTask: PropTypes.func,
+  /** Event to change the task to archived */
+  onArchiveTask: PropTypes.func,
+  /** Event to change the task to archived */
+  onEditTaskTitle: PropTypes.func,
   /** Event to change the task to unpinned */
   onRestoreTask: PropTypes.func,
   /** Event to change the task to deleted */

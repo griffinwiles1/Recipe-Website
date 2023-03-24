@@ -129,26 +129,39 @@
 }
 
 .list-item + .list-item {
-  border-top: 1px solid var(--lightMed);
+  border-top: 2px solid var(--lightMed);
 }
 
 .list-item.list-item.TASK_PINNED + .list-item {
-  border-top: 1px solid var(--darkHeavy);
+  border-top: 2px solid var(--darkHeavy);
 }
 
 .list-item.checked .delete-item {
   display: inline-block;
 }
 
+
+/* --- TASK_PINNED --- */
 .list-item.TASK_PINNED {
-  background: var(--lightMed);
-  
+  background: var(--lightMed);  
 }
+
+.list-item.TASK_PINNED:hover {
+  background: var(--lightHeavy);
+}
+
 .list-item.TASK_PINNED input[type="text"] {
   color: var(--darkHeavy);
   font-weight: bold;
 }
+
+
+/* --- TASK_COMPLETED/TASK_DELETED --- */
 .list-item.TASK_COMPLETED, .list-item.TASK_DELETED {
+  background: var(--darkMed);
+}
+
+.list-item.TASK_COMPLETED:hover, .list-item.TASK_DELETED:hover {
   background: var(--dark);
 }
 
@@ -158,20 +171,8 @@
   text-decoration: line-through;
 }
 
-.list-item.TASK_PINNED:hover {
-  background: var(--dark);
-}
-
-.list-item.TASK_COMPLETED:hover {
-  background: var(--darkMed);
-}
-
 .list-item.TASK_COMPLETED:hover input[type="text"] {
   text-decoration: none;
-}
-
-.list-item.TASK_DELETED:hover {
-  background: var(--darkMed);
 }
 
 .list-item.TASK_DELETED input[type="text"] {
