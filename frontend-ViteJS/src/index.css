@@ -59,7 +59,7 @@
 
 
 /* --- checkbox --- */
-.checkbox {
+.checkbox, .checkboxChecked {
   width: 42px;
   display: inline-block;
   height: 3.25rem;
@@ -67,41 +67,64 @@
   vertical-align: middle;
 }
 
-.checkbox input[type="checkbox"] {
+.checkbox input[type="checkbox"] , .checkboxChecked input[type="checkbox"] {
   font-size: 1em;
   visibility: hidden;
 }
 
-.checkbox input[type="checkbox"] + span:before {
+.checkbox input[type="checkbox"] + span:before, .checkboxChecked input[type="checkbox"] + span:before {
+  display: flex;
+  width: 1em;
+  height: 1em;
+  padding-left: 1px;
+  padding-bottom: 1px;
+  justify-content: center;
+  align-items: center;
+  
   position: absolute;
   top: 50%;
   right: auto;
   bottom: auto;
   left: 50%;
-  width: 1em;
-  height: 1em;
-  transform: translate3d(-50%, -50%, 0);
+  
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  color: var(--lightMed);
+  content: "";
+  
   background: transparent;
   box-shadow: var(--checkboxShadow);
-  content: "";
-  display: flex;
+  transform: translate3d(-50%, -50%, 0);
+}
+
+.list-item:hover .checkbox input[type="checkbox"] + span:before {
+  content: "✓";
 }
 
 .checkboxDark input[type="checkbox"] + span:before {
+  color: var(--darkHeavy);
+  font-weight: 1000;
   box-shadow: var(--checkboxShadowDark);
 }
 
-.checkbox input[type="checkbox"]:checked + span:before {
+.checkboxChecked input[type="checkbox"] + span:before {
   padding-left: 1px;
   padding-bottom: 1px;
+  justify-content: center;
+  align-items: center;
+
   font-size: 16px;
   line-height: 24px;
   font-weight: bold;
   color: var(--lightMed);
-  box-shadow: var(--lightMed) 0 0 0 2px inset;
   content: "✓";
-  justify-content: center;
-  align-items: center;
+  
+  box-shadow: var(--lightMed) 0 0 0 2px inset;  
+}
+
+.list-item:hover .checkboxChecked input[type="checkbox"] + span:before {
+  content: "";
 }
 
 /* --- list-item --- */
@@ -111,6 +134,10 @@
   display: flex;
   flex-wrap: wrap;
   height: 3.25rem;
+}
+
+.list-item:hover {
+  cursor: pointer;
 }
 
 .list-item .title {
@@ -125,21 +152,6 @@
   background: transparent;
 }
 
-.list-item input[type="text"]:focus {
-  cursor: text;
-}
-
-.list-item.checked .delete-item {
-  display: inline-block;
-}
-
-/* --- taskList --- */
-.taskList:first-child {
-  border-top-right-radius: .375rem;
-  border-top-left-radius: .375rem;
-}
-
-.taskList:last-child {
-  border-bottom-right-radius: .375rem;
-  border-bottom-left-radius: .375rem;
+.list-item:hover input[type="text"] {
+  text-decoration: none;
 }

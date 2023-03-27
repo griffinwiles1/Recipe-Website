@@ -42,15 +42,6 @@ Archived.args = {
   },
 };
 
-export const Restored = Template.bind({ });
-Restored.args = {
-  task: {
-    ...Default.args.task,
-    state: 'TASK_RESTORED',
-  },
-};
-
-
 export const Deleted = Template.bind({ });
 Deleted.args = {
   task: {

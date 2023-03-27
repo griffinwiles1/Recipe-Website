@@ -15,8 +15,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
-    "chromatic": "npx chromatic --project-token=4720822ee363"
+    "build-storybook": "storybook build"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.0.0-rc.5",
@@ -45,7 +44,8 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.3",
-    "react-redux": "^8.0.5"
+    "react-redux": "^8.0.5",
+    "react-router-dom": "^6.9.0"
   },
   "msw": {
     "workerDirectory": "public"
